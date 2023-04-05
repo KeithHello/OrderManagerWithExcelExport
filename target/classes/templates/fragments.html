@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fragments</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+    <!-- Add jQuery, Popper.js, and Bootstrap JS -->
+    <script th:src="@{/webjars/jquery/3.6.4/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/2.9.3/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+    <!-- Add Font Awesome CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/5.15.3/css/all.min.css}"/>
+</head>
+<body>
+<div th:fragment="sidebar" class="col-2 sidebar bg-dark">
+    <div class="logo"></div>
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link text-white" th:href="@{/}"><i class="fas fa-outdent"></i> 情報一覧</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" th:href="@{/order/register}"><i class="fas fa-plus"></i> 情報登録</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" th:href="@{/upload}"><i class="fas fa-upload"></i> アップロード</a>
+        </li>
+    </ul>
+</div>
+<header th:fragment="header" class="bg-light py-3">
+    <span class="trigger"><i class="fas fa-bars"></i></span>
+    <span><a href="#" th:href="@{/order/generate-excel}" class="btn btn-secondary ms-4">エクセル作成</a></span>
+</header>
+
+</body>
+</html>
