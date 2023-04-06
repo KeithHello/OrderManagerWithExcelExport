@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+  <!-- Add Bootstrap CSS -->
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+  <!-- Add jQuery, Popper.js, and Bootstrap JS -->
+  <script th:src="@{/webjars/jquery/3.6.4/jquery.min.js}"></script>
+  <script th:src="@{/webjars/popper.js/2.9.3/umd/popper.min.js}"></script>
+  <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+  <!-- Add Font Awesome CSS -->
+  <link rel="stylesheet" th:href="@{/webjars/font-awesome/5.15.3/css/all.min.css}"/>
+
+  <title>Order Management</title>
+  <script th:inline="javascript">
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            $('.trigger').click(function () {
+                $('.sidebar').toggleClass('collapsed');
+            });
+        });
+        /*]]>*/
+
+    </script>
+</head>
+<body>
+
+<div class="container-fluid container-height">
+  <div class="row container-height">
+    <div th:replace="fragments :: sidebar"></div>
+    <div class="col">
+      <div th:replace="fragments :: header"></div>
+      <main class="px-4 py-3">
+        <h1>エクセルファイルアップロード結果</h1>
+        <h1 th:text="${message}"></h1>
+        <table>
+          <tr th:each="record : ${records}">
+            <td th:each="value : ${record}" th:text="${value}"></td>
+          </tr>
+        </table>
+        <footer class="px-4 py-3 d-flex justify-content-center">
+          <a href="/upload/excel">他のエクセルファイルをアップロード？</a>
+        </footer>
+      </main>
+    </div>
+  </div>
+</div>
+</body>
+</html>

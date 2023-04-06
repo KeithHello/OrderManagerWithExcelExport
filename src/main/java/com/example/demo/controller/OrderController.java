@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Order;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.util.ExcelGenerator;
+import com.example.demo.util.ExcelReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,11 @@ public class OrderController {
     public String upload(Model model) {
         model.addAttribute("orders", orderRepository.findAll());
         return "upload/upload";
+    }
+
+    @GetMapping("/excel/upload")
+    public String uploadExcel(Model model) {
+        return "/excel/upload";
     }
 
     @GetMapping("/order/detail/{id}")
@@ -97,6 +104,24 @@ public class OrderController {
         }
 
         return "upload/result";
+    }
+
+    @PostMapping("/upload/excel")
+    public String handleExcelUpload(@RequestParam("file") MultipartFile file, Model model) {
+        if (file.isEmpty()) {
+            model.addAttribute("message", "Please select a file to upload.");
+            return "upload-status";
+        }
+
+        try {
+            List<List<String>> records = ExcelReader.readExcel(file);
+            model.addAttribute("records", records);
+            model.addAttribute("message", "File uploaded and processed successfully.");
+        } catch (IOException e) {
+            model.addAttribute("message", "File upload failed: " + e.getMessage());
+        }
+
+        return "excel/result";
     }
 
     @GetMapping("/order/generate-excel")
